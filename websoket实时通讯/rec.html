@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        收到服务器端消息:<span id="recMsg"></span>
+    </h1>
+    <script>
+        //建立到服务器端的连接
+        var ws=new WebSocket("ws://localhost:8080")
+        //当连接被打开时,注册接受消息的处理函数
+        ws.onopen=function(event){
+            //监听消息,当有消息发送过来时,就将发送的消息显示到元素上
+            ws.onmessage=function(event){
+                recMsg.innerHTML=event.data;
+            }
+        }
+
+    </script>
+</body>
+</html>

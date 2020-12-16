@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="border: 2px solid #00ffcc;">
+        cookie收到
+        <h1>收到消息:
+            <span id="recMsg1"></span>
+        </h1>
+        <h1>收到消息:
+            <span id="recMsg2"></span>
+        </h1>
+    </div>
+    <div style="border: 2px solid #00ffcc;">
+        localstorage收到
+        <h1>收到消息:
+            <span id="recMsg3"></span>
+        </h1>
+        <h1>收到消息:
+            <span id="recMsg4"></span>
+        </h1>
+    </div>
+    
+    <script>
+        window.addEventListener('storage',load)
+        function load(){
+            recMsg3.innerHTML=localStorage.getItem('msg3')
+            recMsg4.innerHTML=localStorage.getItem('msg4')
+        }
+        // console.log(document.cookie)
+        function getKey(key) {
+            var cookies = JSON.parse('{"' + document.cookie.replace(/=/g, '":"').replace(/;\s+/g, '","') + '"}')
+            return cookies[key]
+        }
+        setInterval(function () {
+            recMsg1.innerHTML = getKey('msg1')
+            recMsg2.innerHTML = getKey("msg2")
+        }, 500)
+    </script>
+</body>
+
+</html>

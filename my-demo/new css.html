@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            display: -webkit-box;
+            /*值必须为-webkit-box或者-webkit-inline-box*/
+            -webkit-box-orient: vertical;
+            /*值必须为vertical*/
+            -webkit-line-clamp: 2;
+            /*值为数字，表示一共显示几行*/
+            overflow: hidden;
+        }
+
+        input {
+            /* 用来定义插入光标（caret）的颜色 */
+            caret-color: red;
+            font-size:25px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text">
+    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quisquam voluptatum omnis repudiandae dolorum
+        voluptates necessitatibus libero, distinctio cumque, iure at. Exercitationem, nostrum voluptas inventore inlum
+        eum accusantium ipsum repudiandae
+        labore eligendi inventore non. Minima nobis tempore odio earum officia, ad facere deserunt, laboriosam
+        recusandae unde asperiores at dolorem esse facilis, alias accusantium obcaecati.</div>
+    <div style="width: 300px; height: 100px; background-color:gray;">
+        <span style="display:block;background-color: burlywood;
+            width:-webkit-fill-available;height: -webkit-fill-available;">这是子元素的内容</span>
+    </div>
+</body>
+
+</html>

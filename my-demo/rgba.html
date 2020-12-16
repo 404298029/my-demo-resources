@@ -1,0 +1,22 @@
+<script>
+	function get() {
+		var r = parseInt(Math.random() * 256);
+		var g = parseInt(Math.random() * 256);
+		var b = parseInt(Math.random() * 256);
+		return `rgb(${r},${g},${b})`
+	}
+</script>
+<script>
+	function getColor() {
+		return '#' + parseInt(Math.random() * (256 * 256 * 256)).toString(16)
+	}
+	console.log(getColor())
+</script>
+<button onclick='get()'>按钮</button>
+<script>
+	function get(e){
+		e=window.event;
+		console.log(e.target.setAttribute('title','我来了'))
+		console.log(e.target.getAttribute('title'))
+	}
+</script>

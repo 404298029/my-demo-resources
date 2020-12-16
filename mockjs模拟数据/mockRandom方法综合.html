@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/Mock.js/1.0.1-beta3/mock-min.js"></script>
+</head>
+<body>
+    <script>
+        var data=Mock.mock({
+            "布尔值":"@boolean",//随机生成true和false
+            "布尔值计算概率":"@boolean(2,20,'我是谁')",//计算我是谁出现的概率
+            // 出现2/22 不出现20/22
+            '随机整数':'@natural',//随机返回一个大于零的整数
+            '随机整数1':'@natural(10,15)',//随机返回一个10-15之间的整数
+            '随机整数2':'@integer(10,20)',//用法同上,返回整数
+            '浮点数':'@float(0,50,0,3)',//随机浮点数,0-50之间保留0-3位随机小数点
+            '随机字符':"@character('lower')",//随机生成一个字符
+            '随机字符串':'@string(2,8)',//返回一个2-8的随机字符串
+            '随机字符串':"@string('互联网行业',2,5)",//自定义字符串中随机选择2-5个返回
+            // '随机整数数组':'@range(4)',
+            // '随机整数数组1':'@range(1,8,2)',//步长为2,不包括10在内
+            '随机日期':'@date()',//参数format可选,指定格式
+            '随机日期加时间':'@datetime()',//参数同上
+            '当前时间':'@now()',//参数unit,format unit用来格式化日期时间,
+            //可选值有：year、month、week、day、hour、minute、second、week，默认不会格式化。
+            '随机图片':"@image(100x100,#00ffcc,'互联网行业')",
+            //参数size,background,foreground指示图片的前景色,
+            //format为图片格式,默认值为png,text文本,写中文有的会乱码
+            '随机base64图片编码':'@dataImage()',
+            '随机颜色color':'@color()',
+            '随机颜色hex':'@hex()',
+            '随机颜色rgb':'@rgb()',
+            '随机颜色hsl':'@hsl()',
+            '随机英文文本paragraph':'@paragraph()',//参数文本中句子的个数 
+            //len指定 min最小值 max最大值
+            '随机中文文本cparagraph':'@cparagraph(1)',//参数同上
+            '随机英文句sentence':'@sentence(5)',//参数同上,首字母是大写
+            '随机中文句csentence':'@csentence()', //参数同上
+            '随机单词word':'@word()',//参数同上
+            '随机汉子cword':'@cword()',
+            "随机汉子":"@cword('一二三四五六七',3,6)",//参数 min  max pool
+            '随机英文标题title':'@title()',//参数 len min max 
+            '随机中文标题ctitle':'@ctitle()',//参数同上
+            '随机英文名first':'@first()',
+            '随机英文姓last':'@last()',
+            '随机英文姓名name':'@name()',
+            '随机中文名cfirst':'@cfirst()',
+            '随机中文姓clast':'@clast()',
+            '随机中文姓名cname':'@cname()',
+            '随机URL':'@url()',//参数protocol指定协议,host指定域名,和端口号
+            '随机URL协议protocol':'@protocol()',
+            '随机域名':'@domain()',
+            '随机顶级域名tld':'@tld()',
+            '随机邮箱email':'@email()',//参数domain 可指定域名1130733290@qq.com
+            '随机IP地址':'@ip()',//不区分大小写 可IP
+            '随机生成中国大区region':'@region()',
+            '随机生成中国省(直辖市.行政区.自治区)':'@province()',
+            '随机生成中国的市city':"@city()",//参数prefix 
+            //是否生成市对应的省,值为true和false
+            '随机生成中国的县county':'@county()',
+            //参数prefix,是否生成市对应的市和省,值为true和false
+            '随机生成一个邮政编码zip':'@zip()',
+            '字符串的第一个字母转大写capitalize':'@capitalize(hello)',
+            //upper把字母都转成大写 lower把字母都转成小写
+            '从数组中任意取出一个元素返回pick':'@pick([a,b,c,d,e,f])',
+            //shuffle 打乱数组中元素的顺序
+            '随机生成一个GUID guid':'@guid()',
+            '随机生成一个18位身份证id':'@id()',
+            '生成一个全局的自增整数increment':'@increment()',//可设置默认值
+            
+        })
+        console.table(data)
+            var template = {name: 'value1'}
+            var data = {name: 'value2'}
+                Mock.valid(template, data)
+                // =>
+                [
+                    {
+                        "path": [
+                            "data",
+                            "name"
+                        ],
+                        "type": "value",
+                        "actual": "value2",
+                        "expected": "value1",
+                        "action": "equal to",
+                        "message": "[VALUE] Expect ROOT.name'value is equal to value1, but is value2"
+                    }
+                ]
+    </script>
+</body>
+</html>

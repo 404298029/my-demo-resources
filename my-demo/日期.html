@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时日期显示</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .divs {
+        width: 600px;
+        height: 400px;
+        margin: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        margin-left: -300px;
+        margin-top: -200px;
+    }
+
+    #div1 {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+    }
+
+    #div2 {
+        background: url(imgs/grow.jpg);
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        animation: change 30s linear infinite;
+    }
+
+    @keyframes change {
+        0% {
+            opacity: 1;
+        }
+
+        /* 10% {
+            opacity: 0;
+        } */
+
+        50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
+
+<body>
+    <div id="div1">
+        <div id="div2">
+            <!-- 设置动画效果 -->
+        </div>
+    </div>
+    <div class="divs">
+        <h1 style="color: tomato;font-size: 50px;">北京时间:</h1>
+        <h2 id="h1" style="display: inline;font-size: 50px;"></h2>
+        <h1 style="color: tomato;font-size: 50px;" id="h2"></h1>
+
+
+        <script type="text/javascript">
+            var i = 0;
+            setInterval(function () {
+                var body = document.getElementById('div2');
+                var arr = [
+                    'url(imgs/grow.jpg)', 'url(imgs/timg4.jpg)', 'url(imgs/timg5.jpg)',
+                    'url(imgs/timg.jpg)', 'url(imgs/timg1.jpg)', 'url(imgs/timg2.jpg)',
+                    'url(imgs/timg3.jpg)', 'url(imgs/timg6.jpg)', 'url(imgs/timg7.jpg)'];
+                i++;
+                if (i > 8) {
+                    i = 0;
+                }
+                body.style.background = arr[i];
+
+                body.style.backgroundSize = "cover";
+            }, 30000)
+
+
+
+            function ymdhis() {
+                var obj = new Date();
+                var y = obj.getFullYear();//获取年份
+                var m = obj.getMonth() + 1;//获取月份
+                var d = obj.getDate();//获取几号 
+                var w = obj.getDay();//获取周几(可结合数组显示大写周几)(范围0~6)
+                var h = obj.getHours();//获取小时(几点)
+                var i = obj.getMinutes();//获取分钟(几分)
+                var s = obj.getSeconds();//获取秒数(几秒)
+                // console.log(obj.toLocaleString());//2019-7-16 下午 14:22:57
+                //console.log(obj.toLocaleDateString());//2019-7-16
+                console.log(obj.toLocaleTimeString());//14:23:05
+                var week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                if (m < 10) m = "0" + m;
+                if (d < 10) d = "0" + d;
+                if (h < 10) h = "0" + h;
+                if (i < 10) i = "0" + i;
+                if (s < 10) s = "0" + s;
+                var time_h1 = y + '年' + m + '月' + d + '日' + " " + week[w];
+                // var time_h2 = h + '点' + i + '分' + s + '秒'
+                var time_h2 = obj.toLocaleTimeString();
+                document.getElementById("h1").innerHTML = time_h1;
+                document.getElementById("h2").innerHTML = time_h2;
+                setTimeout(ymdhis, 1000);
+            }
+            ymdhis();
+        </script>
+        <script>
+            var year1 = new Date();
+            var year2 = new Date('2020/10/1');//两个对象相减，就可以代表相差的毫秒数
+            var d = year2 - year1;
+            console.log(d)
+        </script>
+        <script>
+            var d1 = new Date('2020/6/15 09:57:30');
+            // '2020-06-15 09:57:30'  
+            //  2020,06,15,09,57,30 几种方式都行(注意数字形式不加引号)
+            console.log(d1)//Mon Jun 15 2020 09:57:30 GMT+0800 (中国标准时间)
+
+            //练习：创建Date对象，保存员工的入职时间'2019/7/16'，合同期为3年，计算到期时间
+            //合同到期前一个月续签合同，如果是周末要提前到周五
+            var t1 = new Date(2019, 07, 16)//月份加1变成8月份
+            var t2 = new Date(t1)
+            //设置t2年份在t2年份的数值上加3
+            t2.setFullYear(t2.getFullYear() + 3);
+            var t3 = new Date(t2);//提前一个月签合同
+            t3.setMonth(t3.getMonth() - 1);
+            var dayt3 = t3.getDay()
+            console.log(dayt3)
+            if (dayt3 == 6) {
+                t3.setDate(t3.getDate() - 1)
+            } else if (dayt3 == 0) {
+                t3.setDate(t3.getDate() - 2)
+            }
+            console.log(`某员工入职时间为${t1.toLocaleString()}`)
+            console.log(`某员工合同到期时间为${t2.toLocaleString()}`)
+            console.log(`某员工合同续签时间为${t3.toLocaleString()}`)
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function liang() {
+            return new Promise(function (resolve, reject) {
+                var bang = '亮的接力棒'
+                if (Math.random() < 0.5) {
+                    reject(`吧唧,亮拿着${bang}摔倒了`);
+                } else {
+                    console.log(`亮拿着${bang}起跑`)
+                    resolve(bang);
+                }
+            })
+        }
+
+        function ran(bang) {
+            return new Promise(function (resolve, reject) {
+                console.log(`然拿着${bang}起跑`)
+                resolve(bang);
+            })
+        }
+
+        function dong(bang) {
+            return new Promise(function (resolve, reject) {
+                console.log(`东拿着${bang}起跑`)
+                resolve(bang);
+            })
+        }
+
+        function peng(bang) {
+            console.log(`鹏拿着${bang}到达终点`)
+        }
+
+        // liang().then(ran).then(dong).then(peng).catch((e) => {
+        //     console.log(e)
+        // })
+
+
+        // Promise.all([liang(), ran(), dong(), peng()])
+        //     .then((arr) => {
+        //         console.log(arr)//arr是每次resolve调用时,传入的值
+        //         console.log(`比赛结束`)
+        //     }).catch(e => {
+        //         console.log(`有人拿着${e}摔倒了 `)
+        //     })
+
+        //es7中对Promise的简化
+        //ES7异步函数自调
+        (async function () {
+            try {
+                var bang = await liang();
+                bang = await ran(bang);
+                bang = await dong(bang);
+                bang = await peng(bang)
+            } catch (e) {
+                console.log(e)
+            }
+
+        })()
+    </script>
+</body>
+
+</html>

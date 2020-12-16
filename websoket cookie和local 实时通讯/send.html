@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    cookie做法
+    <hr>
+    <input id='msg1' type="text">
+    <input id="msg2" type="text">
+    <button id="send">发送</button>
+    <hr>
+    localstorage做法
+    <hr>
+    <input id='msg3' type="text">
+    <input id="msg4" type="text">
+    <button id="send2">发送</button>
+
+    <script>
+        send.onclick = function () {
+            if (msg1.value != '' && msg2.value != '') {
+                document.cookie = "msg1=" + msg1.value.trim();
+                document.cookie = "msg2=" + msg2.value.trim();
+            }
+        }
+        send2.onclick=function(){
+            if(msg3.value != '' && msg4.value != ''){
+                localStorage.setItem('msg3',msg3.value.trim())
+                localStorage.setItem('msg4',msg4.value.trim())
+            }
+        }
+    </script>
+</body>
+
+</html>

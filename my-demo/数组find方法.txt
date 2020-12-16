@@ -1,0 +1,17 @@
+ES6中数组方法（ find )
+有一个对象数组，找到符合条件的对象 （find方法找到符合条件的对象之后不在往后执行）无符合条件返回undefined
+复制代码
+        var arr = [
+            {name:'jerry',sex:'man'},
+            {name:'jack',sex:'woman'},
+            {name:'jack',sex:'man'}
+        ]
+        var jack = arr.find(function(obj){
+            return obj.name == 'jack';
+        })
+        console.log(jack);  // 返回符合条件的第一个对象{name: "jack", sex: "woman"}
+
+        var bill = arr.find(function(obj){
+            return obj.name == 'bill';
+        })
+        console.log(bill);  // undefined

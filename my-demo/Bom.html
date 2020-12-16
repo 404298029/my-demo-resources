@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<style>
+	#div{
+		width:200px;height:200px;border-top:3px solid red;
+	}	
+	div div{
+			background:#00ffcc;height:100%;margin-top:12px;
+	}
+</style>
+<body>
+
+	<a id="a" onclick="alert('疼啊!!!别按了')">查看a标签的结构</a>
+	<div id='div'>
+		<div></div>
+	</div>
+	<TABLE>
+		<!-- 即使没有写tbody,在浏览器执行的时候也会加上 -->
+		<tr>
+			<td>上锁的房间</td>
+			<td>士大夫</td>
+			<td>第三方</td>
+		</tr>
+	</TABLE>
+	<div>
+		<p class='slider-item item-icon'>我是第一个p标签</p>
+		<p>2</p>
+		<p>3</p>
+		<p>4</p>
+		<p>5</p>
+	</div>
+	<script>
+	console.log(document.getElementsByTagName('div')[0].children)
+		var a = document.getElementById("a")
+		console.log(window.history)
+		console.log(window.location)
+		console.log(window.navigator)
+		console.log(window.document)
+		console.log(window)
+		console.log(outerWidth, outerHeight)
+		console.log(innerWidth, innerHeight)
+		//window.close()
+		console.log(window.name, "这个是打开的窗口的窗口名")
+		setInterval(function () {
+			console.log("页面刷新了一次")
+			//	location.reload()
+			//history.go(0)
+
+		}, 1000)
+	</script>
+</body>
+
+</html>

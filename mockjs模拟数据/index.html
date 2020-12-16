@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/Mock.js/1.0.1-beta3/mock-min.js"></script>
+</head>
+<body>
+    <script>
+       var data=Mock.mock({
+           //属性值是字符串 String
+            "name|2-6":"@name",//随机生成2到6个字符串
+            "name1|2":"@cname",//重复2次的生成一个随机姓名
+          // 属性值是数字 Number
+            'number|+1':1,//属性值自动加 1，初始值为1
+            'number1|2-10':1,//在2-10之间随机取一个数字
+            'number2|1-100.1-10':1,//1-100之间随机生成一个数字,小数部分保留1-10位
+            'number3|20.5':1,//数字20的小数部分,随机生成五位
+            //属性值是布尔型 Boolean
+            'bool1|1':Boolean,//随机生成一个布尔值,值为true的概率是 1/2,值为false的概率同样是1/2。
+            'bool2|2-3':"1",
+            //属性值是Object
+            'obj|2':{"age":10,"price":50,"title":"我是mockjs"},//从obj中随机拿两个属性出来
+            'obj1|2-4':{"随机1":"随机1","随机2":"随机2","随机3":"随机3","随机4":"随机4"},
+            //属性值是Array
+            'arr|1':[1,2,3,4,5],//从数组中随机取一个值
+            'arr1|+1':[2,3,1,4,5],//从数组中随机取一个值然后加一
+            'arr3|2-4':["新数组","新数1组","26","北京"],//从中随机取出2-4个数组合并成新数组
+            'arr4|2':['money','age','address'],//数组重复生成两次
+            //属性值是function
+            'fun':function(){//函数的返回结果赋值给fun属性,也算是对象
+                return "我是return的结果"
+            },
+            //属性值是正则表达式RegExp
+            'reg':/[a-z][A-Z][0-9]/,//随机生成匹配该正则的表达式
+            'reg1':/\w\W\s\S\d\D/,
+            'reg2':/\d{5,10}/,//随机生成一个数字,五位到十位之间
+        })
+            console.table(data)
+            //注意事项
+            //用 @ 来标识其后的字符串是 占位符。
+            //占位符 引用的是 Mock.Random 中的方法。
+            //通过 Mock.Random.extend() 来扩展自定义占位符。
+            //占位符 也可以引用 数据模板 中的属性。
+            //占位符 会优先引用 数据模板 中的属性。
+            //占位符 支持 相对路径 和 绝对路径。
+            
+    </script>
+</body>
+</html>

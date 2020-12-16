@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .pic {
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="javascript:;" class="file">点击上传文件
+        <input id="p_file" type="file" accept="" v-on:change="uploadFile($event)" name="fileTrans" ref="file" value=""
+            multiple />
+    </a>
+    <div class="pic" id="divs">
+
+    </div>
+    <img id="preview" src="" />
+</body>
+<script src="./jquery图片上传插件/js/jquery-1.8.3.min.js"></script>
+<script>
+    //首先我们需要通过FileReader构造函数实例化对象
+    var p_file = document.getElementById('p_file');
+    p_file.onchange = function (ev) {
+        // var that = this;
+        // const file = document.getElementById('p_file');
+        // const fileObj = file.files[0];
+        // const windowURL = window.URL || window.webkitURL;
+        // const img = document.getElementById('preview');
+        // if (file && fileObj) {
+        //     const dataURl = windowURL.createObjectURL(fileObj);
+        //     console.log(file.files);
+        //     console.log(dataURl);
+        //     img.setAttribute('src', dataURl);
+        // }
+        var files = this.files;
+        var length = files.length;
+        console.log("选择了" + length + "张图片");
+        //3、回显
+        var div = document.createElement("div");
+        // div.className = "pic";
+        $.each(files, function (key, value) {
+            console.log(value);
+            //每次都只会遍历一个图片数据
+            img = document.createElement("img");
+            var fr = new FileReader();
+            fr.onload = function () {
+                img.src = this.result;
+                img.style.width = '200px';
+                img.style.height = '200px';
+                divs.append(img)
+                document.body.appendChild(divs);
+            }
+            fr.readAsDataURL(value);
+        })
+
+    }
+</script>
+
+</html>

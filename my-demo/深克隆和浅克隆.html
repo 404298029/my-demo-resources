@@ -1,0 +1,80 @@
+<script>
+	var obj={
+		name:"李磊",
+		age:26,
+		tlephone:18394488807,
+		arr:null,
+		address:{
+			shi:"成都市",
+			qu:"锦江区"
+		},
+		price:[2000,3514,2640],
+		friends:["jack","rose","jerry"]
+	}
+	//浅克隆 方法一
+	var obj1={};
+	function clone1(obj){
+		for(var key in obj){
+			obj1[key]=obj[key]
+		}
+		return obj1;
+	}
+//	console.log(clone1(obj))
+	obj1.name="韩梅梅";
+//	console.log(obj1) 修改name属性 不在影响 李磊
+//	console.log(obj)
+//	console.log(obj==obj1)//false 两个对象的地址值不一样  浅克隆成功
+
+
+
+
+//浅克隆 方法二
+var obj2={...obj}
+//console.log(obj2)
+
+
+
+
+
+
+//深克隆 方法一
+var obj3={};
+function clone2(obj){
+//	console.log({}.toString.call(obj))
+	//一开始函数传进来的obj,如果是null,就直接return,不在往下执行
+	if(obj===null){
+		return null;
+	}else if({}.toString.call(obj)==="[object Array]"){
+		var  arr1=[];
+		   arr1=obj.slice();
+			 return arr1;
+	}
+	for(var key in obj){
+		//如果原对象中当前属性值是原始类型 就直接赋值
+		if(typeof obj[key]!=="Object"){
+			obj3[key]=obj[key]//原始类型复制,就是复制副本
+		}else{
+			//否则当前属性的值不是原始类型的值,再次调用函数进行克隆
+			obj3[key]=clone2(obj[key])
+		}
+	}
+	return obj3;
+}
+
+//obj.name="我是韩梅梅"
+//obj.arr="我是null替换的"
+console.log(clone2(obj))
+//obj3.name="woshisdaf"
+console.log(obj) 
+
+
+
+
+//深克 隆方法二
+var obj4=JSON.parse(//再转成对象
+JSON.stringify(obj)//先转为json
+);
+//obj.name="我是党鹏"
+//console.log(obj)
+//console.log(obj4)
+</script>

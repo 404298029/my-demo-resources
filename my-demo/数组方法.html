@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-  <style>
-    img{
-      filter: blur(2px);
-    }
-  </style>
+<style>
+  img {
+    filter: blur(0px);
+  }
+</style>
+
 <body>
   <img src="./cat.jpg" alt="sdf">
   <script>
@@ -52,7 +53,6 @@
     var arr5 = [1, 2, "1", "1", "hello", "hello", 3, 1, 2]
     console.log(Array.from(new Set(arr5)))
     console.log([...new Set(arr5)])
-    console.log(new Set().toString())
 
 
 
@@ -124,6 +124,21 @@
       arra[i][keys[i]] = person[keys[i]]
     }
     console.log(arra)
+    //数组find方法，和map不同的是，它返回的是找到的值，而不是返回一个数组
+    var arr = [
+      { name: 'jerry', sex: 'man' },
+      { name: 'jack', sex: 'woman' },
+      { name: 'jack', sex: 'man' }
+    ]
+    var jack = arr.find(function (obj) {
+      return obj.name == 'jack';
+    })
+    console.log(jack);  // ���ط��������ĵ�һ������{name: "jack", sex: "woman"}
+
+    var bill = arr.find(function (obj) {
+      return obj.name == 'bill';
+    })
+    console.log(bill);  // undefined
   </script>
 </body>
 

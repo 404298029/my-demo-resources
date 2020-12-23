@@ -6,14 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<style>
-  img {
-    filter: blur(0px);
-  }
-</style>
 
 <body>
-  <img src="./cat.jpg" alt="sdf">
   <script>
     //数组去重
     //1.第一种方法去重(简单项)
@@ -133,12 +127,43 @@
     var jack = arr.find(function (obj) {
       return obj.name == 'jack';
     })
-    console.log(jack);  // ���ط��������ĵ�һ������{name: "jack", sex: "woman"}
+    console.log(jack);  // {name: "jack", sex: "woman"}
 
     var bill = arr.find(function (obj) {
       return obj.name == 'bill';
     })
     console.log(bill);  // undefined
+    //数组递归遍历json数据
+    var arr11 = [
+      { name: '小明', age: 25, children: [{ name: '小红', age: 26, children: [{ name: '红红', age: 10 }] }] },
+      { name: '小兰', age: 20, children: [{ name: '小丽', age: 21, children: [{ name: '亮亮', age: 11 }] }] },
+      { name: '小胖', age: 23, children: [{ name: '小智', age: 24, children: [{ name: '东东', age: 12 }] }] },
+      { name: '小高', age: 15, children: [{ name: '小云', age: 36, children: [{ name: '然然', age: 13 }] }] }
+    ]
+    function forArr(arr) {
+      var newArr = [];
+      var a = 0;
+      for (var i = 0; i < arr.length; i++) {
+        for (var key in arr[i]) {
+          var obj = {}
+          if (Array.isArray(arr[i][key])) {
+            forArr(arr[i][key])
+          } else {
+            if (a % 2 == 0) {
+              obj[key] = arr[i][key]
+              a++;
+            } else {
+              obj[key] = arr[i][key]
+              newArr.push(obj)
+              // obj=null
+            }
+            // newArr.push(JSON.parse(`{"${key}":"${arr[i][key]}"}`))
+          }
+        }
+      }
+      return newArr
+    }
+    console.log(forArr(arr11))
   </script>
 </body>
 

@@ -135,35 +135,46 @@
     console.log(bill);  // undefined
     //数组递归遍历json数据
     var arr11 = [
-      { name: '小明', age: 25, children: [{ name: '小红', age: 26, children: [{ name: '红红', age: 10 }] }] },
-      { name: '小兰', age: 20, children: [{ name: '小丽', age: 21, children: [{ name: '亮亮', age: 11 }] }] },
-      { name: '小胖', age: 23, children: [{ name: '小智', age: 24, children: [{ name: '东东', age: 12 }] }] },
+      { name: '小明', age: 25, addr: '兰州', children: [{ name: '小红', age: 26, children: [{ name: '红红', age: 10 }] }] },
+      { name: '小兰', age: 20, addr: '刘家峡', children: [{ name: '小丽', age: 21, children: [{ name: '亮亮', age: 11 }] }] },
+      { name: '小胖', age: 23, children: [{ name: '小智', age: 24, addr: '海石湾', children: [{ name: '东东', age: 12 }] }] },
       { name: '小高', age: 15, children: [{ name: '小云', age: 36, children: [{ name: '然然', age: 13 }] }] }
     ]
+    var oldArr = [];
     function forArr(arr) {
       var newArr = [];
-      var a = 0;
-      for (var i = 0; i < arr.length; i++) {
-        for (var key in arr[i]) {
-          var obj = {}
-          if (Array.isArray(arr[i][key])) {
-            forArr(arr[i][key])
-          } else {
-            if (a % 2 == 0) {
-              obj[key] = arr[i][key]
-              a++;
+      arr.forEach(e => {
+        var obj = {};
+        for (const key in e) {
+          if (Object.hasOwnProperty.call(e, key)) {
+            if (Array.isArray(e[key])) {
+              forArr(e[key])
             } else {
-              obj[key] = arr[i][key]
-              newArr.push(obj)
-              // obj=null
+              obj[key] = e[key]
             }
-            // newArr.push(JSON.parse(`{"${key}":"${arr[i][key]}"}`))
           }
         }
-      }
+        oldArr.push(obj)
+      });
+      newArr = newArr.concat(oldArr)
       return newArr
     }
     console.log(forArr(arr11))
+    console.log(oldArr);
+    //相同结构数组组合
+    var arr12 = ['张总', 18394488802, '刘总', 15693452104, '李总', 13984023652];
+    var arr13 = [];
+    var obj1;
+    arr12.forEach(function (e, i) {
+      if (i % 2 == 0) {
+        obj1 = {}
+        obj1.name = e;
+      } else {
+        obj1.telphone = e;
+        arr13.push(obj1)
+      }
+    })
+    console.log(arr13);
   </script>
 </body>
 

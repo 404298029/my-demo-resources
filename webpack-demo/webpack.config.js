@@ -1,13 +1,20 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-13 11:10:03
+ * @LastEditTime: 2021-01-10 23:21:20
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \webpack-demo\webpack.config.js
+ */
 const path = require('path')
 //添加新的入口文件，index.html还是会引用旧的，用它来解决(插件)
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //每次构建项目之前对dist文件夹进行清理操作
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 var config = {
     entry: {
         app: './src/index.js',
         print: './src/print.js',
-        myTest: './src/myselfTest.js'
     },
     output: {
         filename: '[name].bundle.js',
@@ -18,7 +25,7 @@ var config = {
         contentBase: './dist'
     },
     plugins: [
-        // new CleanWebpackPlugin(['dist']),(有自己的测试文件，暂时注释改行)
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Output Management  (出口管理)'
         })

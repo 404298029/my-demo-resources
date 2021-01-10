@@ -16,7 +16,8 @@
       //当前元素，在原始数组中的第一个索引==当前索引值，否则返回当前元素
       return arr.indexOf(item, 0) === index;
     });
-    console.log(arr1)
+    //console.log(arr1)
+    /***************************************************************************************************************/
     //2.第二种方法去重(数组对象)
     var arr2 = [
       { id: 0, name: '小明' },
@@ -32,7 +33,36 @@
       // console.log(obj)
       return prev
     }, [])
-    console.log(arr3)
+    //console.log(arr3)
+    /***************************************************************************************************************/
+    //两个数组去重问题(案例：页面第一次选完数据后，未提交，第二次选择重复的数据)只需要两个数组，不需要第三个数组
+    var arr14 = [{ id: 1, name: '小米' }, { id: 2, name: '华为' }, { id: 3, name: '苹果' }, { id: 4, name: 'vivo' }, { id: 5, name: 'oppo' }]
+    var arr15 = [{ id: 1, name: '小米' }, { id: 2, name: '华为' }, { id: 6, name: '魅族' }]
+    for (const i of arr15) {
+      var isNew = false;//是否为新元素
+      arr14.forEach(function (j, index, arr) {
+        if (j.id == i.id) {
+          isNew = true
+        }
+        if (index == arr.length - 1 && isNew == false) {//当里面的循环到了最后一个位置，isNew为false，说明该元素是新元素
+          arr14.push(i)
+        }
+      });
+    }
+    console.log(arr14);
+    /***************************************************************************************************************/
+    //同上的第二种方法
+    var arr16 = [{ id: 1, name: '小米' }, { id: 2, name: '华为' }, { id: 3, name: '苹果' }, { id: 4, name: 'vivo' }, { id: 5, name: 'oppo' }]
+    var arr17 = [{ id: 1, name: '小米' }, { id: 2, name: '华为' }, { id: 6, name: '魅族' }]
+    arr16.forEach(e => {
+      arr17.forEach(function (m, i, arr) {
+        if (e.id == m.id) {
+          arr17.splice(i, 1)
+        }
+      })
+    });
+    console.log(arr16.concat(arr17));
+    /***************************************************************************************************************/
     //3.第三种去重(hash原理)
     var arr4 = [1, 2, 3, 2, 1, 4];
     var hash = {};//一个对象中不允许有重复的下标()
@@ -42,14 +72,13 @@
     var res = [];
     var i = 0;
     for (res[i++] in hash);//i++ 先执行操作  再加一
-    console.log(res);
-    //4.第四种方法(最简单,最难理解)
+    //console.log(res);
+    /***************************************************************************************************************/
+    //4.第四种方法(最简单)
     var arr5 = [1, 2, "1", "1", "hello", "hello", 3, 1, 2]
-    console.log(Array.from(new Set(arr5)))
-    console.log([...new Set(arr5)])
-
-
-
+    //console.log(Array.from(new Set(arr5)))
+    //console.log([...new Set(arr5)])
+    /***************************************************************************************************************/
     //将数组里面的数字随机乱序排列
     var arr6 = [1, 2, 3, 4, 5, 6]
     for (var i = 0; i < arr6.length; i++) {
@@ -57,59 +86,11 @@
       var num = arr6[i]//原始类型值  传递的是原来的一份副本
       arr6[i] = arr6[m]
       arr6[m] = num
-
     }
-    console.log(arr6)
-
-    //将两个数组中排好序的数组,找出相同元素,放入新数组中
-    var arr7 = [1, 2, 3, 4, 5]
-    var arr8 = [3, 4, 5, 6, 7]
-    var arr9 = [];
-    for (var i of arr7) {
-      // console.log(i)
-      for (var j of arr8) {
-        // console.log(`j的值为${j}`)
-        if (i == j) {
-          arr9.push(i)
-        }
-      }
-    }
-    console.log(arr9)
-
-    //去掉数组中非数字的字符,并且对每个数字加1
-    var arr10 = [1, 2, 3, "a", "1", {}, 4, 6];
-    for (var i = arr10.length - 1; i >= 0; i--) {
-      if (typeof arr10[i] == 'number') {
-        arr10[i] += 1
-      } else {
-        arr10.splice(i, 1)
-      }
-    }
-    console.log(arr10)// [2, 3, 4, 5, 7]
-    // arr10.forEach(function (value, i, arr) {
-    //   //最后无法达到自己想要的结果原因是
-    //   //forEach底层原理就是for循环,for长度发生变化,最后结果变化
-    //   if (typeof value == 'number') {
-    //     arr[i] += 1
-    //   } else {
-    //     arr.splice(i, 1)
-    //   }
-    // })
-    // console.log(arr10)// [2, 3, 4, "1", 4, 7]
-
+    //console.log(arr6)
+    /***************************************************************************************************************/
     //将对象拆分转成数组(一个对象数组)
     var person = { lilei: '李磊', age: 12, address: '成都' }
-    var arrs = [];
-    var i = 0;
-    for (var key in person) {
-      if (person.hasOwnProperty(key)) {
-        arrs.push(JSON.parse(`{"${key}":"${person[key]}"}`))
-        // arrs.push(obj)
-        // arrs[0][key] = person[key]
-        // i++;
-      }
-    }
-    console.log(arrs)
     //将对象拆分转成数组(多个对象数组)
     var keys = Object.keys(person)
     var arra = [];
@@ -117,7 +98,8 @@
       arra.push({})
       arra[i][keys[i]] = person[keys[i]]
     }
-    console.log(arra)
+    //console.log(arra)
+    /***************************************************************************************************************/
     //数组find方法，和map不同的是，它返回的是找到的值，而不是返回一个数组
     var arr = [
       { name: 'jerry', sex: 'man' },
@@ -127,12 +109,13 @@
     var jack = arr.find(function (obj) {
       return obj.name == 'jack';
     })
-    console.log(jack);  // {name: "jack", sex: "woman"}
+    //console.log(jack);  // {name: "jack", sex: "woman"}
 
     var bill = arr.find(function (obj) {
       return obj.name == 'bill';
     })
-    console.log(bill);  // undefined
+    //console.log(bill);  // undefined
+    /***************************************************************************************************************/
     //数组递归遍历json数据
     var arr11 = [
       { name: '小明', age: 25, addr: '兰州', children: [{ name: '小红', age: 26, children: [{ name: '红红', age: 10 }] }] },
@@ -159,8 +142,9 @@
       newArr = newArr.concat(oldArr)
       return newArr
     }
-    console.log(forArr(arr11))
-    console.log(oldArr);
+    //console.log(forArr(arr11))
+    //console.log(oldArr);
+    /***************************************************************************************************************/
     //相同结构数组组合
     var arr12 = ['张总', 18394488802, '刘总', 15693452104, '李总', 13984023652];
     var arr13 = [];
@@ -174,7 +158,10 @@
         arr13.push(obj1)
       }
     })
-    console.log(arr13);
+    // console.log(arr13);
+    /***************************************************************************************************************/
+
+
   </script>
 </body>
 

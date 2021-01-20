@@ -1,0 +1,223 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-01-19 21:22:53
+ * @LastEditTime: 2021-01-19 22:02:36
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \systemMuster\sys.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>system</title>
+    <link rel="icon" href="./img/title.ico">
+    <link rel="stylesheet" href="./css/sys.css">
+</head>
+
+<body>
+    <div class="out-side">
+        <div class="in-side">
+            <div>
+                <h2>公司系统</h2>
+                <h6>内网访问</h6>
+                <img src="./img/sys_bg_in_inter.png" alt="" title="内网访问图片">
+                <h6>外网访问</h6>
+                <img src="./img/sys_bg_out_inter.png" alt="" title="外网访问图片">
+                <h6>内外网均可访问</h6>
+                <img src="./img/sys_bg_in_or_out.png" alt="" title="内外网访问图片">
+            </div>
+            <div>
+                <h5>ioT Builder</h5>
+            </div>
+            <div>
+                <h5>SVN</h5>
+            </div>
+            <div>
+                <h5>GitLab</h5>
+            </div>
+            <div>
+                <h5>禅道</h5>
+            </div>
+            <div>
+                <h5>电力通</h5>
+            </div>
+            <div>
+                <h5>随州南iBMS智慧站房管理平台</h5>
+            </div>
+            <div>
+                <h5>合同管理</h5>
+            </div>
+            <div>
+                <h5>电梯监视预警系统</h5>
+            </div>
+            <div>
+                <h5>服务器共享网盘</h5>
+                <p>
+                    <span id="server-in">内网</span>
+                    <span id="server-out">外网</span>
+                </p>
+            </div>
+            <div>
+                <h5>用能信息采集与计费系统</h5>
+                <p>
+                    <span id="info-in">内网</span>
+                    <span id="info-out">外网</span>
+                </p>
+            </div>
+            <div>
+                <h5>能源管理系统</h5>
+                <p>
+                    <span id="management-in">内网</span>
+                    <span id="management-out">外网</span>
+                </p>
+            </div>
+            <div>
+                <h5>电力设备状态评估系统</h5>
+                <p>
+                    <span id="device-state-in">内网</span>
+                    <span id="device-state-out">外网</span>
+                </p>
+            </div>
+            <div>
+                <h5>灯塔照明-云监控管理系统</h5>
+                <p>
+                    <span id="light-in">内网</span>
+                    <span id="light-out">外网</span>
+                </p>
+            </div>
+            <div>
+                <h2>实时监控(需IE浏览器访问)</h2>
+            </div>
+            <div>
+                <h5>负一楼生产部</h5>
+            </div>
+            <div>
+                <h5>负一楼库房</h5>
+            </div>
+            <div>
+                <h5>四楼楼顶</h5>
+            </div>
+            <div>
+                <h5>一楼过道</h5>
+            </div>
+            <div>
+                <h5>一楼大门</h5>
+            </div>
+            <div>
+                <h5>二楼过道</h5>
+            </div>
+            <div>
+                <h5>三楼过道1</h5>
+            </div>
+            <div>
+                <h5>三楼过道2</h5>
+            </div>
+            <div>
+                <h5>四楼过道</h5>
+            </div>
+            <div>
+                <h5>工程部</h5>
+            </div>
+            <div>
+                <h5>财务室</h5>
+            </div>
+            <div>
+                <h5>MVR</h5>
+            </div>
+            <div>
+                <h5>实时监控直接登录</h5>
+            </div>
+        </div>
+    </div>
+    <script>
+        var btns = document.getElementsByClassName('in-side')[0];
+        for (const child of btns.children) {
+            child.addEventListener('mouseenter', function (e) {
+                if (e.target.children[1] != undefined) {
+                    e.target.children[1].style.bottom = '0px'
+                }
+            })
+            child.addEventListener('mouseleave', function (e) {
+                if (e.target.children[1] != undefined) {
+                    e.target.children[1].style.bottom = '-80px'
+                }
+            })
+        }
+        btns.addEventListener('click', function (e) {
+            if (e.target.textContent.trim() == 'SVN') {
+                window.open('https://192.168.128.250:4443/!/#')
+            } else if (e.target.textContent.trim() == 'GitLab') {
+                window.open('http://192.168.128.78:8090/users/sign_in')
+            } else if (e.target.textContent.trim() == '禅道') {
+                window.open('http://192.168.128.253:8090/zentao/my/')
+            } else if (e.target.textContent.trim() == '电力通') {
+                window.open('http://192.168.128.250:8086/tldlt/')
+            } else if (e.target.textContent.trim() == '随州南iBMS智慧站房管理平台') {
+                window.open('http://192.168.128.82:10080/view/login.html')
+            } else if (e.target.textContent.trim() == '合同管理') {
+                window.open('http://192.168.128.202/#/login?redirect=%2Fdashboard')
+            } else if (e.target.textContent.trim() == '电梯监视预警系统') {
+                window.open('https://192.168.127.130:20000/prelogin')
+            } else if (e.target.textContent.trim() == '服务器共享网盘') {
+                window.open('http://192.168.128.250:6060/')
+            } else if (e.target.textContent.trim() == '用能信息采集与计费系统') {
+                window.open('http://192.168.128.129:8081/SCTL')
+            } else if (e.target.textContent.trim() == '能源管理系统') {
+                window.open('http://192.168.128.184/')
+            } else if (e.target.textContent.trim() == '电力设备状态评估系统') {
+                window.open('http://192.168.128.4:8080/ibrush/login.do?reqCode=init')
+            } else if (e.target.textContent.trim() == '灯塔照明-云监控管理系统') {
+                window.open('http://192.168.128.4:8018/syslight/http/do.jhtml?router=homeService.initLogin')
+            } else if (e.target.textContent.trim() == '一楼过道') {
+                window.open('http://192.168.5.59/')
+            } else if (e.target.textContent.trim() == '一楼大门') {
+                window.open('http://192.168.5.70/')
+            } else if (e.target.textContent.trim() == '二楼过道') {
+                window.open('http://192.168.5.61/')
+            } else if (e.target.textContent.trim() == '三楼过道1') {
+                window.open('http://192.168.5.63/')
+            } else if (e.target.textContent.trim() == '三楼过道2') {
+                window.open('http://192.168.5.65/')
+            } else if (e.target.textContent.trim() == '四楼过道') {
+                window.open('http://192.168.5.69/')
+            } else if (e.target.textContent.trim() == '负一楼库房') {
+                window.open('http://192.168.5.68/')
+            } else if (e.target.textContent.trim() == '四楼楼顶') {
+                window.open('http://192.168.5.67/')
+            } else if (e.target.textContent.trim() == '财务室') {
+                window.open('http://192.168.5.58/')
+            } else if (e.target.textContent.trim() == 'MVR') {
+                window.open('http://192.168.5.82/')
+            } else if (e.target.textContent.trim() == '实时监控直接登录') {
+                window.open('http://192.168.5.65/index_ch.html?wport=3000&uid=Admin&pwd=xxxx')
+            } else if (e.target.textContent.trim() == '负一楼生产部') {
+                window.open('http://192.168.5.66/')
+            } else if (e.target.textContent.trim() == '工程部') {
+                window.open('http://192.168.5.62/')
+            } else if (e.target.textContent.trim() == 'ioT Builder') {
+                window.open('http://113.128.47.218:8880/')
+            }
+        })
+
+        function inOrOutHttp(in_id, in_http, out_id, out_http) {
+            var iotBuilderIn = document.getElementById(in_id);
+            iotBuilderIn.addEventListener('click', function () {
+                window.open(in_http)
+            })
+            var iotBuilderOut = document.getElementById(out_id);
+            iotBuilderOut.addEventListener('click', function () {
+                window.open(out_http)
+            })
+        }
+        inOrOutHttp('server-in', 'http://192.168.128.250:6060/', 'server-out', 'http://www.syswareonline.com:6060/')
+        inOrOutHttp('info-in', 'http://192.168.128.129:8081/SCTL', 'info-out', 'http://www.syswareonline.com:8081/SCTL')
+        inOrOutHttp('management-in', 'http://192.168.128.184/', 'management-out', 'http://www.syswareonline.com:4612/')
+        inOrOutHttp('device-state-in', 'http://192.168.128.4:8080/ibrush/login.do?reqCode=init', 'device-state-out', 'http://www.syswareonline.com:8088/')
+        inOrOutHttp('light-in', 'http://192.168.128.4:8018/syslight/http/do.jhtml?router=homeService.initLogin', 'light-out', 'http://www.syswareonline.com:60001/')
+    </script>
+</body>
+
+</html>

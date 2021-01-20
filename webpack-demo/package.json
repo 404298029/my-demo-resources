@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack",
+    "build": "webpack",
     "watch": "webpack --watch",
     "server": "node server.js",
     "webpack-server": "webpack-dev-server --open"

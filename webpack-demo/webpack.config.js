@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-13 11:10:03
- * @LastEditTime: 2021-01-10 23:21:20
+ * @LastEditTime: 2021-01-18 20:18:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \webpack-demo\webpack.config.js
@@ -12,14 +12,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 //每次构建项目之前对dist文件夹进行清理操作
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 var config = {
+    mode: 'development',
     entry: {
-        app: './src/index.js',
-        print: './src/print.js',
+        index: {
+            import: './src/index.js',
+            dependOn: 'shared',
+        },
+        another: {
+            import: './src/another-module.js',
+            dependOn: 'shared',
+        },
+        shared: 'lodash',
     },
+    devtool: 'inline-source-map',
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'//express和webpack服务器之间的模块热替换
+    },
+    optimization: {
+        runtimeChunk: 'single',
     },
     devServer: {
         contentBase: './dist'

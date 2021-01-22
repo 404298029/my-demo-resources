@@ -8,10 +8,10 @@ h2,h6{
     display: inline;
 }
 h5{
-    margin:20px 0 0 0;
-    padding: 0 10px;
+   margin:0;
+    height: 100%;
 }
-p>span{
+p>a{
     width: 50%;
     font-size: 0.83em;
     font-weight: bold;
@@ -76,7 +76,13 @@ body{
     width: 100%;
     color: white;
 }
-.in-side>div>p:nth-child(1){
+h5>a{
+    padding: 25px 10px 0 10px;
+    display:block;
+    height: 100%;
+    text-decoration: none;
+    color: black;
 }
-.in-side>div>p:nth-child(2){
+a:hover{
+    text-decoration: underline;
 }

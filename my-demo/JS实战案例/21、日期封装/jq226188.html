@@ -1,0 +1,361 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>原生JS日历-jq22.com</title>
+<script src="https://libs.baidu.com/jquery/1.2.3/jquery.min.js"></script>
+<style>
+/*************************
+ * 日历样式对应表
+ * #date         日历块 
+ * table         表格
+ * th            头部
+ * td            身体
+ * a.now         本月
+ * a.non-arrival 其他月
+ * a.day         今天
+ * a.href        链接
+ * #date_diglogs 记住对话框
+ *************************/
+
+#date {
+	width:220px;
+	padding-bottom:5px;
+	box-shadow:0 1px 3px #ccc;
+	border:1px solid #EDEDED;
+}
+#date table {
+	width:inherit;
+	user-select:none;
+	font-size:12px;
+	border-collapse:collapse;
+	border-spacing:0px;
+}
+#date table tr th {
+	background-color:#f8f8f8;
+	color:#5e5f63;
+}
+#date table tr:nth-of-type(2) th {
+	font-weight:300;
+}
+#date table tr td {
+	text-align:center;
+	font-family:"Comic Sans MS";
+	padding:2px 0;
+}
+#date table tr td a {
+	text-decoration:none;
+}
+#date table tr td a.now {
+	color:#757575;
+}
+#date table tr td a.day {
+	background:mediumblue;
+	text-decoration:underline;
+	color:#fff;
+}
+#date table tr td a.href {
+	border:1px solid #ccc;
+	transition:all 1s linear;
+}
+#date table tr td a.href:hover {
+	border:1px dotted #5E5F63;
+	background:gold;
+}
+#date table tr td a.non-arrival {
+	color:#ccc;
+}
+.date_diglogs {
+	font-size:10px;
+	background:#fff;
+	padding:2px 5px;
+	border-radius:3px;
+	box-shadow:0 1px 3px #ccc;
+	border:1px solid #EDEDED;
+	color:#757575;
+}
+</style>
+</head>
+<body>
+<div id="date"></div>
+
+<script>
+/* 2021/2/26
+ * 功能: 日历挂件
+ * 清源妙善
+ */
+
+function BlogDate(nowDate) {
+    /* 可变数据 */
+    this.year = nowDate.getFullYear(); // 获取年份
+    this.month = nowDate.getMonth(); // 获取月份
+    this.day = nowDate.getDate(); // 获取今天是几号
+    this.week = new Date(this.year, this.month, 1).getDay(); // 获取每月前面的空余天数
+    this.days = new Date(this.year, this.month + 1, -1).getDate() + 1; // 获取总共有几天
+    this.last_month = new Date(this.year, this.month, -1).getDate() + 1; // 保存上个月的天数	
+
+    /* 不变数据 */
+    this.now_year = nowDate.getFullYear(); // 保存今年的年份
+    this.now_month = nowDate.getMonth(); // 保存今年的月份
+}
+
+BlogDate.prototype.createDate = function(name) {
+    // 获取块与创建表格
+    let date_div = document.getElementById('date');
+    let date_table = document.createElement('table');
+    date_div.appendChild(date_table);
+
+    // 创建所有的 tr 标签
+    let date_all_tr = new Array();
+    for (let n = 0; n < 8; n++) {
+        date_all_tr[n] = document.createElement('tr');
+        date_table.appendChild(date_all_tr[n]);
+    }
+
+    // 创建头部th标签
+    let date_head_th = new Array();
+    for (let n = 0; n < 3; n++) {
+        date_head_th[n] = document.createElement('th');
+        date_all_tr[0].appendChild(date_head_th[n]);
+    }
+
+    // 设置特殊元素属性
+    date_head_th[0].setAttribute('id', 'prev');
+    date_head_th[1].setAttribute('colspan', '5');
+    date_head_th[1].setAttribute('title', `${name}`);
+    date_head_th[2].setAttribute('id', 'next');
+
+    // 创建星期 th 标签
+    let date_week_th = new Array();
+    for (let n = 0; n < 7; n++) {
+        date_week_th[n] = document.createElement('th');
+        date_all_tr[1].appendChild(date_week_th[n]);
+    }
+
+    // 创建身体 td, a 标签数组
+    let date_body_td = new Array();
+    let date_body_td_a = new Array();
+
+    // 创建身体 td, a 标签实体
+    for (let n = 2, i = 0; n < 8; n++, i++) {
+        date_body_td[i] = [];
+        date_body_td_a[i] = [];
+
+        for (let m = 0; m < 7; m++) {
+            date_body_td[i][m] = document.createElement('td');
+            date_body_td_a[i][m] = document.createElement('a');
+            date_body_td[i][m].appendChild(date_body_td_a[i][m]);
+            date_all_tr[n].append(date_body_td[i][m]);
+        }
+    }
+}
+
+BlogDate.prototype.setBlogDate = function(newDate) {
+    /* 更新数据 */
+    this.year = newDate.getFullYear(); // 获取年份
+    this.month = newDate.getMonth(); // 获取月份
+    this.day = newDate.getDate(); // 获取今天是几号
+    this.week = new Date(this.year, this.month, 1).getDay(); // 获取每月前面的空余天数
+    this.days = new Date(this.year, this.month + 1, -1).getDate() + 1; // 获取总共有几天
+    this.last_month = new Date(this.year, this.month, -1).getDate() + 1; // 获取上个月的天数
+}
+
+BlogDate.prototype.updateTime = function(blogs_date) {
+    // 获取日历对象
+    let date_div = document.getElementById('date');
+    let date_table = date_div.getElementsByTagName('table')[0];
+
+    // 创建日历头部 tr, th
+    let date_head_tr = date_table.getElementsByTagName('tr')[0];
+    let date_head_th = date_head_tr.getElementsByTagName('th');
+
+    // 创建头部数据
+    let date_head_arr = [
+        '<', `${this.year} 年 ${this.month + 1} 月`, '>'
+    ];
+
+    // 更新头部数据
+    for (let n = 0; n < date_head_th.length; n++) {
+        date_head_th[n].textContent = date_head_arr[n];
+    }
+
+    // 创建星期部分 tr, th
+    let date_week_tr = date_table.getElementsByTagName('tr')[1];
+    let date_week_th = date_week_tr.getElementsByTagName('th');
+
+    // 创建星期数据
+    let date_week_arr = [
+        '日', '一', '二', '三', '四', '五', '六'
+    ];
+
+    // 更新星期数据
+    for (let n = 0; n < date_week_th.length; n++) {
+        date_week_th[n].textContent = date_week_arr[n];
+    }
+
+    // 获取身体 td 的 a 标签
+    let date_body_td_a = date_table.getElementsByTagName('a');
+
+    // 设置其他月份的天数 ( 前 )
+    for (let n = this.week - 1, last_month = this.last_month; n >= 0; n--, last_month--) {
+        date_body_td_a[n].textContent = last_month;
+        date_body_td_a[n].setAttribute('class', 'non-arrival');
+    }
+
+    // 设置现在月份的天数 ( 现 )
+    for (let n = this.week, i = 1; i <= this.days; n++, i++) {
+        date_body_td_a[n].textContent = i;
+        // 如果今年今月今日, 设置 day 样式, 其余 now 样式
+        if ((i == this.day) &&
+            (new Date(this.year, this.month, 1).getMonth() == this.now_month) &&
+            (new Date(this.year, this.month, 1).getFullYear() == this.now_year)) {
+            date_body_td_a[n].setAttribute('class', 'day');
+        } else {
+            date_body_td_a[n].setAttribute('class', 'now');
+        }
+    }
+
+    // 设置其他月份的天数 ( 后 )
+    for (let n = this.week + this.days, i = 1; n < date_body_td_a.length; n++, i++) {
+        date_body_td_a[n].textContent = i;
+        date_body_td_a[n].setAttribute('class', 'non-arrival');
+    }
+
+    // 如果链接部分日期数据相同, 设置对应样式
+    for (let n = 0; n < date_body_td_a.length; n++) {
+        for (let m = 0; m < blogs_date.href_num; m++) {
+            if ((this.year == blogs_date.href_year[m]) &&
+                (this.month + 1 == blogs_date.href_month[m]) &&
+                (n == blogs_date.href_day[m])) {
+                date_body_td_a[n].setAttribute('href', blogs_date.href_url[m]);
+                date_body_td_a[n].classList.add('href');
+                date_body_td_a[n].setAttribute('target', '_blank');
+            } else {
+                //  如果不是则判断是否存在多余属性
+                if (Boolean(date_body_td_a[n].getAttribute('target')) &&
+                    Boolean(date_body_td_a[n].getAttribute('href')) &&
+                    (date_body_td_a[n].getAttribute('class') == 'now' ||
+                        date_body_td_a[n].getAttribute('class') == 'non-arrival')) {
+                    date_body_td_a[n].removeAttribute('href');
+                    date_body_td_a[n].removeAttribute('target');
+                }
+            }
+        }
+    }
+}
+
+function initDate(
+    // 默认日历参数表
+    blogs_date = {
+        blogs_name: '我的日历',
+        href_year: [2021],
+        href_month: [2],
+        href_day: [26],
+        href_url: ['http://www.4399.com/'],
+        href_prompt: ['这是我编写的日历挂件'],
+        href_dialog: false,
+        href_num: undefined
+    }
+) {
+    // 参数长度是否相等
+    if ((blogs_date.href_day.length != blogs_date.href_month.length) ||
+        (blogs_date.href_month.length != blogs_date.href_year.length) ||
+        (blogs_date.href_year.length != blogs_date.href_url.length)) {
+        console.info('日历参数长度不等');
+        return false;
+    }
+    // 参数长度相同, 设置对应长度
+    else {
+        blogs_date.href_num = blogs_date.href_day.length;
+    }
+
+    // 创建日历数据
+    let timeDate = new Date();
+    let blogDate = new BlogDate(timeDate);
+
+    // 创建日历实体
+    blogDate.createDate(blogs_date.blogs_name);
+    blogDate.updateTime(blogs_date);
+
+    // 添加 prev 事件
+    document.getElementById('prev').onclick = function() {
+        timeDate.setMonth(timeDate.getMonth() - 1);
+        blogDate.setBlogDate(timeDate);
+        blogDate.updateTime(blogs_date);
+    }
+
+    // 添加 next 事件
+    document.getElementById('next').onclick = function() {
+        timeDate.setMonth(timeDate.getMonth() + 1);
+        blogDate.setBlogDate(timeDate);
+        blogDate.updateTime(blogs_date);
+    }
+
+    openDialogs(blogs_date);
+
+    showBlogsData(blogs_date, timeDate);
+}
+
+function showBlogsData(blogs_date, now) {
+    for (let k in blogs_date) {
+        console.info(`[${k}] : ${blogs_date[k]}`);
+    }
+    console.info(`BlogsDate Ok ${now}`);
+}
+
+function openDialogs(blogs_date) {
+    // 是否开启对话框
+    switch (blogs_date.href_dialog) {
+        case true:
+            let hrefId = document.getElementsByClassName('href');
+            for (let n = 0; n < hrefId.length; n++) {
+                hrefId[n].onmouseover = function(e) {
+                    if (this.getAttribute('class') != 'now' &&
+                        this.getAttribute('class') != 'non-arrival') {
+
+                        var e = e || window.event;
+
+                        let x = e.clientX;
+                        let y = e.clientY;
+
+                        let prompt = blogs_date.href_prompt[n];
+                        let dialogs = document.createElement('div');
+
+                        dialogs.classList.add('date_diglogs');
+                        dialogs.textContent = prompt;
+                        dialogs.style.cssText = `position: absolute;
+											 left: ${x-20}px;
+											 top: ${y+20}px`;
+
+                        document.body.appendChild(dialogs);
+                    }
+                }
+                hrefId[n].onmouseout = function() {
+                    if (this.getAttribute('class') != 'now' &&
+                        this.getAttribute('class') != 'non-arrival') {
+
+                        let diglogs = document.getElementsByClassName('date_diglogs')[0];
+                        document.body.removeChild(diglogs);
+                    }
+                }
+            }
+            break;
+        case false:
+            break;
+    }
+}
+
+
+initDate(blogs_date = {
+    blogs_name: '我的日历',
+    href_year: [2021, 2021],
+    href_month: [2, 2],
+    href_day: [27, 3],
+    href_url: ['http://www.jq22.com/', 'http://www.baidu.com/'],
+    href_prompt: ['今天要出门看亲人', '今天要早睡'],
+    href_dialog: true
+});
+</script>
+
+</body>
+</html>
